@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
@@ -15,7 +16,8 @@ import java.net.URL;
 @Story("Login verification")
 public class LoginTest {
 
-    WebDriver driver;
+    public static WebDriver driver;
+
     @TmsLink("123456")
     @Test
     @Description("Verify login")
@@ -29,8 +31,18 @@ public class LoginTest {
         close();
     }
 
+    @Test
+    public void verifyInvalidLogin() throws MalformedURLException {
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setCapability("platformName", "Windows");
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/"), chromeOptions);
+        driver.get("https://www.saucedemo.com/");
+        Assert.assertEquals(driver.getTitle(), "Sauce Demo");
+        driver.quit();
+    }
+
     @Step("login step")
-    public void login(){
+    public void login() {
         driver.get("https://www.saucedemo.com/");
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
         driver.findElement(By.id("password")).sendKeys("secret_sauce");
@@ -39,7 +51,9 @@ public class LoginTest {
     }
 
     @Step("close broswer step")
-    public void close(){
+    public void close() {
         driver.quit();
     }
 }
+
+
