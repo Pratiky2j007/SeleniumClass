@@ -22,6 +22,8 @@ public class LoginAppTest {
         chromeOptions.setCapability("platformName", "Windows");
          driver = new RemoteWebDriver(new URL("http://localhost:4444/"), chromeOptions);
         launchURL("https://www.google.com");
+        driver.quit();
+
     }
 
     @Test
@@ -31,6 +33,7 @@ public class LoginAppTest {
         chromeOptions.setCapability("platformName", "Windows");
         driver = new RemoteWebDriver(new URL("http://localhost:4444/"), chromeOptions);
         launchURL("https://www.facebook.com");
+        driver.quit();
     }
 
     @Step("Launch url: {0}")
